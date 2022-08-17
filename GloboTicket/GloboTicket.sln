@@ -54,6 +54,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GloboTicket.MobileApp.iOS",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GloboTicket.MobileApp", "GloboTicket.MobileApp\GloboTicket.MobileApp\GloboTicket.MobileApp.csproj", "{ACEA45CB-0CF4-4093-A6AF-E4984FCA6F5D}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "GloboTicket.Shared1", "GloboTicket.Shared\GloboTicket.Shared1.shproj", "{7A352BDD-837F-43DF-9991-B67DDA6E393C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{FF0D028C-D46D-42BB-96B8-7F26AA557B5A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -310,5 +314,8 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {57E1B7AE-99E6-4F8F-977C-CF0FD36BBE42}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		GloboTicket.Shared\GloboTicket.Shared.projitems*{7a352bdd-837f-43df-9991-b67dda6e393c}*SharedItemsImports = 13
 	EndGlobalSection
 EndGlobal
