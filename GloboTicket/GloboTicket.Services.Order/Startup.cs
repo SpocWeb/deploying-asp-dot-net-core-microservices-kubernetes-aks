@@ -12,6 +12,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
+using Microsoft.Extensions.Logging;
+using Micro.Health;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace GloboTicket.Services.Ordering
 {
@@ -20,9 +23,12 @@ namespace GloboTicket.Services.Ordering
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            var loggerFactory = LoggerFactory.Create(builder => { /*configure*/ });
+            logger = loggerFactory.CreateLogger<Startup>();
         }
 
         public IConfiguration Configuration { get; }
+        public ILogger<Startup> logger;
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -40,7 +46,7 @@ namespace GloboTicket.Services.Ordering
             var optionsBuilder = new DbContextOptionsBuilder<OrderDbContext>();
             optionsBuilder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
 
-            services.AddSingleton(new OrderRepository(optionsBuilder.Options));
+            services.AddSingleton(sp => new OrderRepository(optionsBuilder.Options));
 
             services.AddSingleton<IMessageBus, AzServiceBusMessageBus>();
 
@@ -52,6 +58,19 @@ namespace GloboTicket.Services.Ordering
             services.AddSingleton<IAzServiceBusConsumer, AzServiceBusConsumer>();
 
             services.AddControllers();
+
+            try
+            {
+	            services.AddHealthChecks()
+	                .AddAzureServiceBusTopicHealthCheck(Configuration["ServiceBusConnectionString"],
+	                    Configuration["OrderPaymentRequestMessageTopic"], "Order Payment Request Topic", HealthStatus.Unhealthy)
+	                .AddAzureServiceBusTopicHealthCheck(Configuration["ServiceBusConnectionString"],
+	                    Configuration["OrderPaymentUpdatedMessageTopic"], "Order Payment Updated Topic", HealthStatus.Unhealthy);
+            }
+            catch (Exception e)
+            {
+	            logger.LogError(e, " on calling HealthChecks");
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -80,12 +99,18 @@ namespace GloboTicket.Services.Ordering
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapDefaultHealthChecks();
                 endpoints.MapControllers();
             });
 
+            try
+            {
             app.UseAzServiceBusConsumer();
-
-
+            }
+            catch (Exception e)
+            {
+	            logger.LogError(e, " on subscribing Azure Service Bus");
+            }
         }
     }
 }

@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace GloboTicket.Services.Marketing.Worker
 {
@@ -15,20 +16,23 @@ namespace GloboTicket.Services.Marketing.Worker
         private readonly IBasketChangeEventService basketChangeEventService;
         private readonly BasketChangeEventRepository basketChangeEventRepository;
         private readonly IMapper mapper;
+        readonly ILogger<TimedBasketChangeEventService> _logger;
         private DateTime lastRun;
 
-        public TimedBasketChangeEventService(IBasketChangeEventService basketChangeEventService, BasketChangeEventRepository basketChangeEventRepository, IMapper mapper)
+        public TimedBasketChangeEventService(IBasketChangeEventService basketChangeEventService
+	        , BasketChangeEventRepository basketChangeEventRepository
+	        , IMapper mapper, ILogger<TimedBasketChangeEventService> logger)
         {
             this.basketChangeEventService = basketChangeEventService;
             this.basketChangeEventRepository = basketChangeEventRepository;
             this.mapper = mapper;
+            _logger = logger;
             lastRun = DateTime.Now;
         }
 
         public Task StartAsync(CancellationToken stoppingToken)
         {
-
-            _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromSeconds(60));
+            _timer = new Timer(DoWork, null, TimeSpan.FromSeconds(15), TimeSpan.FromSeconds(60));
 
             return Task.CompletedTask;
         }
@@ -37,8 +41,14 @@ namespace GloboTicket.Services.Marketing.Worker
         {
             var events = await basketChangeEventService.GetBasketChangeEvents(lastRun, 10);
             foreach (var basketChangeEvent in events)
+	            try
             {
-                await basketChangeEventRepository.AddBasketChangeEvent(mapper.Map<BasketChangeEvent>(basketChangeEvent));
+		            await basketChangeEventRepository.AddBasketChangeEvent(
+			            mapper.Map<BasketChangeEvent>(basketChangeEvent));
+	            }
+	            catch (Exception x)
+	            {
+                    _logger.LogError(x, " on adding BasketChangeEvent {event}", basketChangeEvent);
             }
             lastRun = DateTime.Now;
         }

@@ -34,7 +34,7 @@ namespace GloboTicket.Web.Controllers
             var getEvents = categoryId == Guid.Empty ? eventCatalogService.GetAll() :
                 eventCatalogService.GetByCategoryId(categoryId);
 
-            await Task.WhenAll(new Task[] { getBasket, getCategories, getEvents });
+            await Task.WhenAll(getBasket, getCategories, getEvents);
 
             var numberOfItems = getBasket.Result?.NumberOfItems ?? 0;
 
@@ -58,6 +58,9 @@ namespace GloboTicket.Web.Controllers
         public async Task<IActionResult> Detail(Guid eventId)
         {
             var ev = await eventCatalogService.GetEvent(eventId);
+
+            if (ev is null) return NotFound();
+
             return View(ev);
         }
     }

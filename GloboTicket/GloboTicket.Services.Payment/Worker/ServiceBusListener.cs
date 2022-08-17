@@ -35,6 +35,8 @@ namespace GloboTicket.Services.Payment.Worker
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
+	        try
+        {
             subscriptionClient = new SubscriptionClient(configuration.GetValue<string>("ServiceBusConnectionString"), configuration.GetValue<string>("OrderPaymentRequestMessageTopic"), configuration.GetValue<string>("subscriptionName"));
 
             var messageHandlerOptions = new MessageHandlerOptions(e =>
@@ -48,7 +50,11 @@ namespace GloboTicket.Services.Payment.Worker
             };
 
             subscriptionClient.RegisterMessageHandler(ProcessMessageAsync, messageHandlerOptions);
-
+            }
+            catch (Exception e)
+            {
+                logger.LogError(e, "on subscribing Azure Service Bus");
+            }
             return Task.CompletedTask;
         }
 
@@ -65,6 +71,8 @@ namespace GloboTicket.Services.Payment.Worker
 
         protected async Task ProcessMessageAsync(Message message, CancellationToken token)
         {
+            using var scope = logger.BeginScope("Processing message for trace {TraceId}", message.CorrelationId);
+
             var messageBody = Encoding.UTF8.GetString(message.Body);
             OrderPaymentRequestMessage orderPaymentRequestMessage = JsonConvert.DeserializeObject<OrderPaymentRequestMessage>(messageBody);
 
@@ -89,7 +97,7 @@ namespace GloboTicket.Services.Payment.Worker
 
             try
             {
-                await messageBus.PublishMessage(orderPaymentUpdateMessage, orderPaymentUpdatedMessageTopic);
+                await messageBus.PublishMessage(orderPaymentUpdateMessage, orderPaymentUpdatedMessageTopic, message.CorrelationId);
             }
             catch (Exception e)
             {

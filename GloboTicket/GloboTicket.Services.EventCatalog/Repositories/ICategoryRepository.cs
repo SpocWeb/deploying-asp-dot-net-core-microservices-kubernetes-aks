@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices.ComTypes;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using GloboTicket.Services.EventCatalog.Entities;
 

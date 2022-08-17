@@ -18,7 +18,9 @@ namespace GloboTicket.Services.Discount.Repositories
 
         public async Task<Coupon> GetCouponByCode(string couponCode)
         {
-            return await _discountDbContext.Coupons.Where(x => x.Code == couponCode).FirstOrDefaultAsync();
+            var coupon = await _discountDbContext.Coupons.Where(x => x.Code == couponCode).FirstOrDefaultAsync();
+
+            return coupon;
         }
 
         public async Task UseCoupon(Guid couponId)

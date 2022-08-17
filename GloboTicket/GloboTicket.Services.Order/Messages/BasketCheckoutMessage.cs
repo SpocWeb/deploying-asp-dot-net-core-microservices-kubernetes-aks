@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using GloboTicket.Integration.Messages;
 
 namespace GloboTicket.Services.Ordering.Messages

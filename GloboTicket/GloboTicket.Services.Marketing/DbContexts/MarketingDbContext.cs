@@ -8,6 +8,7 @@ namespace GloboTicket.Services.Marketing.DbContexts
     public MarketingDbContext(DbContextOptions<MarketingDbContext> options)
         : base(options)
     {
+        Database.Migrate();
     }
 
     public DbSet<BasketChangeEvent> BasketChangeEvents { get; set; }

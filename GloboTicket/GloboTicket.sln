@@ -54,9 +54,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GloboTicket.MobileApp.iOS",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GloboTicket.MobileApp", "GloboTicket.MobileApp\GloboTicket.MobileApp\GloboTicket.MobileApp.csproj", "{ACEA45CB-0CF4-4093-A6AF-E4984FCA6F5D}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "GloboTicket.Shared1", "GloboTicket.Shared\GloboTicket.Shared1.shproj", "{7A352BDD-837F-43DF-9991-B67DDA6E393C}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{FF0D028C-D46D-42BB-96B8-7F26AA557B5A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Micro.Health", "Common\Micro.Health\Micro.Health.csproj", "{BCD18CC1-E5DE-4234-88E2-714E8718C978}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Micro.Logging", "Common\Micro.Logging\Micro.Logging.csproj", "{664547F5-7F2F-4578-A0F0-94B164E01A6F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -288,6 +290,30 @@ Global
 		{ACEA45CB-0CF4-4093-A6AF-E4984FCA6F5D}.Release|iPhone.Build.0 = Release|Any CPU
 		{ACEA45CB-0CF4-4093-A6AF-E4984FCA6F5D}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{ACEA45CB-0CF4-4093-A6AF-E4984FCA6F5D}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{BCD18CC1-E5DE-4234-88E2-714E8718C978}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCD18CC1-E5DE-4234-88E2-714E8718C978}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCD18CC1-E5DE-4234-88E2-714E8718C978}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{BCD18CC1-E5DE-4234-88E2-714E8718C978}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{BCD18CC1-E5DE-4234-88E2-714E8718C978}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{BCD18CC1-E5DE-4234-88E2-714E8718C978}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{BCD18CC1-E5DE-4234-88E2-714E8718C978}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCD18CC1-E5DE-4234-88E2-714E8718C978}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCD18CC1-E5DE-4234-88E2-714E8718C978}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{BCD18CC1-E5DE-4234-88E2-714E8718C978}.Release|iPhone.Build.0 = Release|Any CPU
+		{BCD18CC1-E5DE-4234-88E2-714E8718C978}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{BCD18CC1-E5DE-4234-88E2-714E8718C978}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{664547F5-7F2F-4578-A0F0-94B164E01A6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{664547F5-7F2F-4578-A0F0-94B164E01A6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{664547F5-7F2F-4578-A0F0-94B164E01A6F}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{664547F5-7F2F-4578-A0F0-94B164E01A6F}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{664547F5-7F2F-4578-A0F0-94B164E01A6F}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{664547F5-7F2F-4578-A0F0-94B164E01A6F}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{664547F5-7F2F-4578-A0F0-94B164E01A6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{664547F5-7F2F-4578-A0F0-94B164E01A6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{664547F5-7F2F-4578-A0F0-94B164E01A6F}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{664547F5-7F2F-4578-A0F0-94B164E01A6F}.Release|iPhone.Build.0 = Release|Any CPU
+		{664547F5-7F2F-4578-A0F0-94B164E01A6F}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{664547F5-7F2F-4578-A0F0-94B164E01A6F}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -311,11 +337,10 @@ Global
 		{1A2739AB-BE51-4FDE-A361-A3D26522C1E7} = {CD6C2FD3-1D6A-46EC-8E23-827CA3EC4AFE}
 		{072B9D2E-5F8A-4B13-B9CF-E7C6911D9268} = {CD6C2FD3-1D6A-46EC-8E23-827CA3EC4AFE}
 		{ACEA45CB-0CF4-4093-A6AF-E4984FCA6F5D} = {CD6C2FD3-1D6A-46EC-8E23-827CA3EC4AFE}
+		{BCD18CC1-E5DE-4234-88E2-714E8718C978} = {FF0D028C-D46D-42BB-96B8-7F26AA557B5A}
+		{664547F5-7F2F-4578-A0F0-94B164E01A6F} = {FF0D028C-D46D-42BB-96B8-7F26AA557B5A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {57E1B7AE-99E6-4F8F-977C-CF0FD36BBE42}
-	EndGlobalSection
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		GloboTicket.Shared\GloboTicket.Shared.projitems*{7a352bdd-837f-43df-9991-b67dda6e393c}*SharedItemsImports = 13
 	EndGlobalSection
 EndGlobal

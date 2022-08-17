@@ -5,8 +5,10 @@ using GloboTicket.Services.Ordering.Repositories;
 using Microsoft.Azure.ServiceBus;
 using Microsoft.Azure.ServiceBus.Core;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
+using System.Diagnostics;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,17 +24,18 @@ namespace GloboTicket.Services.Ordering.Messaging
         private readonly IConfiguration _configuration;
 
         private readonly OrderRepository _orderRepository;
+        private readonly ILogger<AzServiceBusConsumer> logger;
         private readonly IMessageBus _messageBus;
 
         private readonly string checkoutMessageTopic;
         private readonly string orderPaymentRequestMessageTopic;
         private readonly string orderPaymentUpdatedMessageTopic;
 
-        public AzServiceBusConsumer(IConfiguration configuration, IMessageBus messageBus, OrderRepository orderRepository)
+        public AzServiceBusConsumer(IConfiguration configuration, IMessageBus messageBus, OrderRepository orderRepository, ILogger<AzServiceBusConsumer> logger)
         {
             _configuration = configuration;
             _orderRepository = orderRepository;
-            // _logger = logger;
+            this.logger = logger;
             _messageBus = messageBus;
 
             var serviceBusConnectionString = _configuration.GetValue<string>("ServiceBusConnectionString");
@@ -63,6 +66,8 @@ namespace GloboTicket.Services.Ordering.Messaging
 
         private async Task OnCheckoutMessageReceived(Message message, CancellationToken arg2)
         {
+            using var scope = logger.BeginScope("Processing message for trace {TraceId}", message.CorrelationId);
+
             var body = Encoding.UTF8.GetString(message.Body);//json from service bus
 
             //save order with status not paid
@@ -81,6 +86,8 @@ namespace GloboTicket.Services.Ordering.Messaging
 
             await _orderRepository.AddOrder(order);
 
+            logger.LogDebug("Created order {OrderId} for user {UserId}", orderId, basketCheckoutMessage.UserId);
+
             //send order payment request message
             OrderPaymentRequestMessage orderPaymentRequestMessage = new OrderPaymentRequestMessage
             {
@@ -93,7 +100,7 @@ namespace GloboTicket.Services.Ordering.Messaging
 
             try
             {
-                await _messageBus.PublishMessage(orderPaymentRequestMessage, orderPaymentRequestMessageTopic);
+                await _messageBus.PublishMessage(orderPaymentRequestMessage, orderPaymentRequestMessageTopic, message.CorrelationId);
             }
             catch (Exception e)
             {

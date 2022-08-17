@@ -9,9 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
-using System.Net.Http;
-using Polly;
-using Polly.Extensions.Http;
+using Micro.Health;
 
 namespace GloboTicket.Services.EventCatalog
 {
@@ -39,6 +37,9 @@ namespace GloboTicket.Services.EventCatalog
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "EventDto Catalog API", Version = "v1" });
             });
+
+            services.AddHealthChecks()
+                .AddDbContextCheck<EventCatalogDbContext>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -70,6 +71,7 @@ namespace GloboTicket.Services.EventCatalog
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapDefaultHealthChecks();
                 endpoints.MapControllers();
             });
         }

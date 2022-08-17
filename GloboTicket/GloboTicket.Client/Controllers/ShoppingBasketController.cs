@@ -4,6 +4,7 @@ using GloboTicket.Web.Models.Api;
 using GloboTicket.Web.Models.View;
 using GloboTicket.Web.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,13 +15,15 @@ namespace GloboTicket.Web.Controllers
     {
         private readonly IShoppingBasketService basketService;
         private readonly IDiscountService discountService;
+        private readonly ILogger<ShoppingBasketController> logger;
         private readonly Settings settings;
 
-        public ShoppingBasketController(IShoppingBasketService basketService, Settings settings, IDiscountService discountService)
+        public ShoppingBasketController(IShoppingBasketService basketService, Settings settings, IDiscountService discountService, ILogger<ShoppingBasketController> logger)
         {
             this.basketService = basketService;
             this.settings = settings;
             this.discountService = discountService;
+            this.logger = logger;
         }
 
         public async Task<IActionResult> Index()
@@ -105,6 +108,8 @@ namespace GloboTicket.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Checkout(BasketCheckoutViewModel basketCheckoutViewModel)
         {
+            using var scope = logger.BeginScope("Checking out basket {BasketId}", basketCheckoutViewModel.BasketId);
+            
             try
             {
                 var basketId = Request.Cookies.GetCurrentBasketId(settings);
@@ -127,7 +132,7 @@ namespace GloboTicket.Web.Controllers
                         UserId = settings.UserId
                     };
 
-                    await basketService.Checkout(basketCheckoutViewModel.BasketId, basketForCheckout);
+                    await basketService.Checkout(basketId, basketForCheckout);
 
                     return RedirectToAction("CheckoutComplete");
                 }
@@ -145,17 +150,33 @@ namespace GloboTicket.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ApplyDiscountCode(string code)
         {
+            var basketId = Request.Cookies.GetCurrentBasketId(settings);
+
+            using var scope = logger.BeginScope("Applying {CouponCode} to basket {BasketId}", code, basketId);
+
             var coupon = await discountService.GetCouponByCode(code);
 
-            if (coupon == null || coupon.AlreadyUsed) return RedirectToAction("Index");
+            if (coupon == null || coupon.AlreadyUsed)
+            {
+                if (coupon == null)
+                {
+                    logger.LogInformation("Coupon code does not exist");
+                }
+                else
+                {                  
+                    logger.LogWarning("User attempted to reuse a previous coupon code");
+                }
+
+                return RedirectToAction("Index");
+            }
 
             //coupon will be applied to the basket
-            var basketId = Request.Cookies.GetCurrentBasketId(settings);
             await basketService.ApplyCouponToBasket(basketId, new CouponForUpdate() { CouponId = coupon.CouponId });
             await discountService.UseCoupon(coupon.CouponId);
 
-            return RedirectToAction("Index");
+            logger.LogDebug("Applied discount coupon to basket", coupon.CouponId, basketId);
 
+            return RedirectToAction("Index");
         }
 
         public IActionResult CheckoutComplete()

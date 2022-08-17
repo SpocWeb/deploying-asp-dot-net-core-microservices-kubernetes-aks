@@ -1,6 +1,7 @@
 ﻿using GloboTicket.Web.Extensions;
 using GloboTicket.Web.Models.Api;
 using System;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -21,6 +22,10 @@ namespace GloboTicket.Web.Services
                 return null;
 
             var response = await client.GetAsync($"/api/discount/code/{code}");
+
+            if (response.StatusCode == HttpStatusCode.NotFound)
+                return null;
+
             return await response.ReadContentAs<Coupon>();
         }
 

@@ -1,5 +1,3 @@
-using System;
-
 namespace GloboTicket.Web.Models.View
 {
     public class ErrorViewModel

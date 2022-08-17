@@ -19,7 +19,7 @@ public static class HealthCheckRouteBuilderExtensions
     /// <summary> Simple Readiness Endpoint; returns HTTP.OK when </summary>
     /// <remarks>
     /// Runs all of the registered HealthChecks.
-    /// Requires to register them
+    /// Requires to register them using the following Code:
     /// </remarks>
     /// <example>
     /// <code lang="cs">

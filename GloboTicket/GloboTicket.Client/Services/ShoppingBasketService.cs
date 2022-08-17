@@ -69,7 +69,9 @@ namespace GloboTicket.Web.Services
         {
             var response = await client.PostAsJson($"api/baskets/checkout", basketForCheckout);
             if(response.IsSuccessStatusCode)
+            {                
                 return await response.ReadContentAs<BasketForCheckout>();
+            }
             else
             {
                 throw new Exception("Something went wrong placing your order. Please try again.");
