@@ -1,9 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30128.74
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GloboTicket.Web", "GloboTicket.Client\GloboTicket.Web.csproj", "{0848F9B8-B1CC-412F-9A8C-A09058575A1E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FA0F1936-AAB8-4DA7-B368-E7C305D28B46} = {FA0F1936-AAB8-4DA7-B368-E7C305D28B46}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{F3632F51-056C-43C5-9E59-8D371E99C8BF}"
 EndProject
