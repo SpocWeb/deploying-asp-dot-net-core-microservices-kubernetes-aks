@@ -1,7 +1,5 @@
-using GloboTicket.Common;
 using GloboTicket.Web.Models;
 using GloboTicket.Web.Services;
-using Micro.Health;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -9,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using System;
+using org.SpocWeb.Micro.Health;
+using org.SpocWeb.Micro.Logging;
 
 namespace GloboTicket.Web
 {

@@ -1,8 +1,8 @@
-using GloboTicket.Common;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using System.Diagnostics;
+using org.SpocWeb.Micro.Logging;
 
 namespace GloboTicket.Web
 {

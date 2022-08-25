@@ -9,9 +9,9 @@ namespace GloboTicket.Gateway.WebBff.Controllers
     [Route("api/bffweb/events")]
     public class CatalogController : ControllerBase
     {
-        private readonly ICatalogService catalogService;
+        private readonly ICatalogStub catalogService;
 
-        public CatalogController(ICatalogService catalogService)
+        public CatalogController(ICatalogStub catalogService)
         {
             this.catalogService = catalogService;
         }

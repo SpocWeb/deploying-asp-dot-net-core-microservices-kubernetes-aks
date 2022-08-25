@@ -25,8 +25,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Common\Micro.Health\Micro.Health.csproj" />
-	  <ProjectReference Include="..\Common\Micro.Logging\Micro.Logging.csproj" />
+	  <ProjectReference Include="..\..\..\..\..\_SpocWeb\Micro\SpocWeb.Micro.Health\SpocWeb.Micro.Health.csproj" />
+	  <ProjectReference Include="..\..\..\..\..\_SpocWeb\Micro\SpocWeb.Micro.Logging\SpocWeb.Micro.Logging.csproj" />
+	  <ProjectReference Include="..\Common\Micro.Health\SpocWeb.Micro.Health.csproj" />
+	  <ProjectReference Include="..\Common\Micro.Logging\SpocWeb.Micro.Logging.csproj" />
 	</ItemGroup>
 
 </Project>

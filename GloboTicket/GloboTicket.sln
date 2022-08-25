@@ -56,9 +56,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GloboTicket.MobileApp", "Gl
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{FF0D028C-D46D-42BB-96B8-7F26AA557B5A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Micro.Health", "Common\Micro.Health\Micro.Health.csproj", "{BCD18CC1-E5DE-4234-88E2-714E8718C978}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpocWeb.Micro.Health", "..\..\..\..\_SpocWeb\Micro\SpocWeb.Micro.Health\SpocWeb.Micro.Health.csproj", "{BCD18CC1-E5DE-4234-88E2-714E8718C978}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Micro.Logging", "Common\Micro.Logging\Micro.Logging.csproj", "{664547F5-7F2F-4578-A0F0-94B164E01A6F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpocWeb.Micro.Logging", "..\..\..\..\_SpocWeb\Micro\SpocWeb.Micro.Logging\SpocWeb.Micro.Logging.csproj", "{664547F5-7F2F-4578-A0F0-94B164E01A6F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

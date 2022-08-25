@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
-using Micro.Health;
+using org.SpocWeb.Micro.Health;
 
 namespace GloboTicket.Services.EventCatalog
 {

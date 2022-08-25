@@ -15,7 +15,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Common\Micro.Logging\Micro.Logging.csproj" />
+	  <ProjectReference Include="..\..\..\..\..\_SpocWeb\Micro\SpocWeb.Micro.Logging\SpocWeb.Micro.Logging.csproj" />
+	  <ProjectReference Include="..\Common\Micro.Logging\SpocWeb.Micro.Logging.csproj" />
 	  <ProjectReference Include="..\GloboTicket.Integration.MessagingBus\GloboTicket.Integration.MessagingBus.csproj" />
 	</ItemGroup>
 

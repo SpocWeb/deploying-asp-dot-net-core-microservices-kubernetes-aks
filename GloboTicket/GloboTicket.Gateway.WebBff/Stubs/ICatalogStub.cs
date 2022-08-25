@@ -5,7 +5,7 @@ using GloboTicket.Gateway.Shared.Event;
 
 namespace GloboTicket.Gateway.WebBff.Services
 {
-    public interface ICatalogService
+    public interface ICatalogStub
     {
         Task<List<EventDto>> GetEventsPerCategory(Guid categoryId);
         Task<EventDto> GetEventById(Guid eventId);

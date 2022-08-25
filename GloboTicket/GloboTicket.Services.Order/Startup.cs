@@ -13,8 +13,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
 using Microsoft.Extensions.Logging;
-using Micro.Health;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using org.SpocWeb.Micro.Health;
 
 namespace GloboTicket.Services.Ordering
 {
@@ -46,7 +46,7 @@ namespace GloboTicket.Services.Ordering
             var optionsBuilder = new DbContextOptionsBuilder<OrderDbContext>();
             optionsBuilder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
 
-            services.AddSingleton(sp => new OrderRepository(optionsBuilder.Options));
+            services.AddSingleton(new OrderRepository(optionsBuilder.Options));
 
             services.AddSingleton<IMessageBus, AzServiceBusMessageBus>();
 

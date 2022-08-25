@@ -11,6 +11,10 @@ namespace GloboTicket.Web.Services
     {
         private readonly HttpClient client;
 
+        //Regular calls, replaced the microservice calls but now through the gateway
+
+        #region Regular calls through Gateway
+
         public EventCatalogService(HttpClient client)
         {
             this.client = client;
@@ -40,5 +44,18 @@ namespace GloboTicket.Web.Services
             return await response.ReadContentAs<List<Category>>();
         }
 
+        #endregion
+
+        //Calls optimized for use through the gateway
+
+        #region Gateway calls
+
+        /*public async Task<CatalogBrowse> GetCatalogBrowse(Guid basketId, Guid categoryId)
+        {
+            var response = await client.GetAsync($"/api/bffweb/events/catalogbrowse/{categoryId}/basket/{basketId}");
+            return await response.ReadContentAs<CatalogBrowse>();
+        */
+
+        #endregion
     }
 }

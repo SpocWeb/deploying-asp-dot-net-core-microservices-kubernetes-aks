@@ -1,6 +1,6 @@
-using GloboTicket.Common;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using org.SpocWeb.Micro.Logging;
 using Serilog;
 
 namespace GloboTicket.Services.EventCatalog

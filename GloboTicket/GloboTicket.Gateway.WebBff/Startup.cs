@@ -26,17 +26,23 @@ namespace GloboTicket.Gateway.WebBff
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddControllers();
-
+            //services.AddMemoryCache(); either Memory or Sql Server Cache
+            services.AddDistributedSqlServerCache(options =>
+            {
+                options.ConnectionString = Configuration.GetConnectionString("DistCacheConnection");
+                options.SchemaName = "dbo";
+                options.TableName = "TestCache";
+            });
             services.AddOptions();
             services.Configure<ServiceUrls>(Configuration.GetSection("ServiceUrls"));
 
-            services.AddHttpClient<ICatalogService, CatalogService>(c =>
+            services.AddHttpClient<ICatalogStub, CatalogStub>(c =>
                 c.BaseAddress = new Uri(Configuration["ServiceUrls:EventCatalog"]));
 
-            services.AddHttpClient<IBasketService, BasketService>(c =>
+            services.AddHttpClient<IBasketStub, BasketStub>(c =>
                 c.BaseAddress = new Uri(Configuration["ServiceUrls:ShoppingBasket"]));
 
-            services.AddHttpClient<IDiscountService, DiscountService>(c =>
+            services.AddHttpClient<IDiscountStub, DiscountStub>(c =>
                 c.BaseAddress = new Uri(Configuration["ServiceUrls:Discount"]));
 
             services.AddHttpClient<IOrderService, OrderService>(c =>
@@ -62,7 +68,7 @@ namespace GloboTicket.Gateway.WebBff
 
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "loboTicket Gateway BFF for Web API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "GloboTicket Gateway BFF for Web API V1");
 
             });
 
